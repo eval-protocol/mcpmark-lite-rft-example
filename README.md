@@ -57,7 +57,7 @@ export MCP_AGENT_MAX_TOKENS=512
 export MCP_MAX_CONCURRENT_ROLLOUTS=1
 ```
 
-Cloud/RFT note: lower defaults (`steps=10`, `max_tokens=512`) are used to reduce context-overflow risk on small models.
+Cloud/RFT note: conservative defaults (`steps=6`, `max_tokens=192`) are used to reduce context-overflow risk on small models.
 
 ## Run benchmark
 ```bash

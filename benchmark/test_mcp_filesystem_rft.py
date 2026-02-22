@@ -12,8 +12,8 @@ from benchmark.verifier import evaluate_task
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE_ROOT = Path(os.getenv("TASK_WORKSPACE_ROOT", "/tmp/mcpmark-lite-rft/workspaces")).resolve()
-MAX_TOKENS = int(os.getenv("MCP_AGENT_MAX_TOKENS", "512"))
-ROLLOUT_STEPS = int(os.getenv("MCP_AGENT_STEPS", "10"))
+MAX_TOKENS = int(os.getenv("MCP_AGENT_MAX_TOKENS", "192"))
+ROLLOUT_STEPS = int(os.getenv("MCP_AGENT_STEPS", "6"))
 PASSED_THRESHOLD = float(os.getenv("MCP_PASSED_THRESHOLD", "0.0"))
 MAX_CONCURRENCY = int(os.getenv("MCP_MAX_CONCURRENT_ROLLOUTS", "2"))
 
@@ -22,6 +22,7 @@ SYSTEM_PROMPT = (
     "You are a precise filesystem automation agent. "
     "You must use tools instead of guessing file contents. "
     "Always call init_task(task_id=...) before any other task tools. "
+    "Keep each assistant response concise and avoid repeating long file contents. "
     "When finished, respond with TASK_COMPLETE."
 )
 
