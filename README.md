@@ -77,11 +77,23 @@ docker run --rm -e FIREWORKS_API_KEY="$FIREWORKS_API_KEY" mcpmark-lite-rft
 Use a known evaluator id for this test:
 - `test-mcp-filesystem-rft-test-mcpmark-lite-filesystem`
 
+Materialize an RFT-ready dataset first (required when using older `eval-protocol` releases that do not auto-apply `dataset_adapter` during `create rft`):
+```bash
+uv run python scripts/materialize_rft_dataset.py \
+  --input data/tasks.jsonl \
+  --output data/rft_tasks_smoke.jsonl \
+  --max-rows 1
+```
+
 Create RFT (base model required):
 ```bash
 uv run ep create rft \
   --evaluator test-mcp-filesystem-rft-test-mcpmark-lite-filesystem \
+  --dataset-jsonl data/rft_tasks_smoke.jsonl \
   --base-model accounts/fireworks/models/qwen3-8b \
+  --response-candidates-count 2 \
+  --max-output-tokens 1024 \
+  --chunk-size 1 \
   --yes \
   --ignore-docker \
   --skip-validation
