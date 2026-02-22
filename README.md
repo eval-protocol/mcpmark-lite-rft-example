@@ -57,6 +57,8 @@ export MCP_AGENT_MAX_TOKENS=512
 export MCP_MAX_CONCURRENT_ROLLOUTS=1
 ```
 
+Cloud/RFT note: lower defaults (`steps=10`, `max_tokens=512`) are used to reduce context-overflow risk on small models.
+
 ## Run benchmark
 ```bash
 uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem -q -s
@@ -97,6 +99,11 @@ uv run ep create rft \
   --yes \
   --ignore-docker \
   --skip-validation
+```
+
+Monitor a job until terminal state:
+```bash
+uv run python scripts/monitor_rft_job.py --job-id <rft_job_id> --account pyroworks
 ```
 
 Notes:
