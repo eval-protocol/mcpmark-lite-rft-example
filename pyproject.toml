@@ -1,0 +1,13 @@
+[project]
+name = "mcpmark-lite-rft-example"
+version = "0.1.0"
+description = "Standalone MCP tool-calling benchmark example compatible with eval-protocol RFT"
+requires-python = ">=3.10"
+dependencies = [
+  "eval-protocol>=0.2.60",
+  "fastmcp>=2.10.0",
+  "pytest>=8.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

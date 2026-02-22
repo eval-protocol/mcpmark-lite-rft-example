@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "task-files": {
+      "command": "python3",
+      "args": ["mcp_server/task_files_server.py"]
+    }
+  }
+}
