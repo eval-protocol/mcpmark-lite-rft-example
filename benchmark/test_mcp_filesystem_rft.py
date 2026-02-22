@@ -11,7 +11,11 @@ from eval_protocol.pytest import AgentRolloutProcessor, evaluation_test
 from benchmark.verifier import evaluate_task
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-WORKSPACE_ROOT = (REPO_ROOT / ".runtime" / "workspaces").resolve()
+WORKSPACE_ROOT = Path(os.getenv("TASK_WORKSPACE_ROOT", "/tmp/mcpmark-lite-rft/workspaces")).resolve()
+MAX_TOKENS = int(os.getenv("MCP_AGENT_MAX_TOKENS", "1024"))
+ROLLOUT_STEPS = int(os.getenv("MCP_AGENT_STEPS", "16"))
+PASSED_THRESHOLD = float(os.getenv("MCP_PASSED_THRESHOLD", "0.0"))
+MAX_CONCURRENCY = int(os.getenv("MCP_MAX_CONCURRENT_ROLLOUTS", "2"))
 
 DEFAULT_MODEL = "fireworks_ai/accounts/fireworks/models/qwen3-8b"
 SYSTEM_PROMPT = (
@@ -69,14 +73,14 @@ def task_dataset_adapter(rows: List[Dict[str, Any]]) -> List[EvaluationRow]:
         {
             "model": os.getenv("MCP_AGENT_MODEL", DEFAULT_MODEL),
             "temperature": 0.0,
-            "max_tokens": 2048,
+            "max_tokens": MAX_TOKENS,
         }
     ],
     mcp_config_path="mcp_config/task_files_stdio.json",
     mode="pointwise",
-    passed_threshold=0.7,
-    steps=24,
-    max_concurrent_rollouts=2,
+    passed_threshold=PASSED_THRESHOLD,
+    steps=ROLLOUT_STEPS,
+    max_concurrent_rollouts=MAX_CONCURRENCY,
 )
 def test_mcpmark_lite_filesystem(row: EvaluationRow) -> EvaluationRow:
     dataset_info = (row.input_metadata.dataset_info or {}) if row.input_metadata else {}

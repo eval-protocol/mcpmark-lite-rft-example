@@ -9,6 +9,7 @@ This server is intentionally simple and deterministic:
 from __future__ import annotations
 
 import json
+import os
 import shutil
 from pathlib import Path
 from typing import Any, Dict
@@ -19,7 +20,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 TASK_CATALOG_PATH = Path(
     (REPO_ROOT / "data" / "tasks.jsonl")
 )
-TASK_WORKSPACE_ROOT = Path(REPO_ROOT / ".runtime" / "workspaces")
+TASK_WORKSPACE_ROOT = Path(os.getenv("TASK_WORKSPACE_ROOT", "/tmp/mcpmark-lite-rft/workspaces"))
 
 mcp = FastMCP("mcpmark-lite-filesystem")
 

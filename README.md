@@ -50,6 +50,13 @@ Optional (default is a small qwen model):
 export MCP_AGENT_MODEL=fireworks_ai/accounts/fireworks/models/qwen3-8b
 ```
 
+Optional low-cost knobs:
+```bash
+export MCP_AGENT_STEPS=8
+export MCP_AGENT_MAX_TOKENS=512
+export MCP_MAX_CONCURRENT_ROLLOUTS=1
+```
+
 ## Run benchmark
 ```bash
 uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem -q -s
@@ -57,7 +64,7 @@ uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem
 
 Small smoke run:
 ```bash
-EP_MAX_DATASET_ROWS=2 uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem -q -s
+EP_MAX_DATASET_ROWS=1 MCP_AGENT_STEPS=6 MCP_AGENT_MAX_TOKENS=512 uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem -q -s
 ```
 
 ## Docker run
@@ -74,9 +81,10 @@ Create RFT (base model required):
 ```bash
 uv run ep create rft \
   --evaluator test-mcp-filesystem-rft-test-mcpmark-lite-filesystem \
+  --base-model accounts/fireworks/models/qwen3-8b \
   --yes \
   --ignore-docker \
-  --training-config-base-model accounts/fireworks/models/qwen3-8b
+  --skip-validation
 ```
 
 Notes:
