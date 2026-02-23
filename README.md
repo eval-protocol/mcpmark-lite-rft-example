@@ -59,6 +59,11 @@ export MCP_MAX_CONCURRENT_ROLLOUTS=1
 
 Cloud/RFT note: conservative defaults (`steps=6`, `max_tokens=192`) are used to reduce context-overflow risk on small models.
 
+On-demand deployment override:
+```bash
+export MCP_ON_DEMAND_MODEL='fireworks_ai/accounts/fireworks/models/qwen3-32b#accounts/pyroworks/deployments/qwen3-32b-rft-py-02221823'
+```
+
 ## Run benchmark
 ```bash
 uv run pytest benchmark/test_mcp_filesystem_rft.py::test_mcpmark_lite_filesystem -q -s

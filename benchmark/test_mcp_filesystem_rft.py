@@ -17,7 +17,10 @@ ROLLOUT_STEPS = int(os.getenv("MCP_AGENT_STEPS", "6"))
 PASSED_THRESHOLD = float(os.getenv("MCP_PASSED_THRESHOLD", "0.0"))
 MAX_CONCURRENCY = int(os.getenv("MCP_MAX_CONCURRENT_ROLLOUTS", "2"))
 
-DEFAULT_MODEL = "fireworks_ai/accounts/fireworks/models/qwen3-8b"
+DEFAULT_MODEL = os.getenv(
+    "MCP_ON_DEMAND_MODEL",
+    "fireworks_ai/accounts/fireworks/models/qwen3-32b#accounts/pyroworks/deployments/qwen3-32b-rft-py-02221823",
+)
 SYSTEM_PROMPT = (
     "You are a precise filesystem automation agent. "
     "You must use tools instead of guessing file contents. "
